@@ -3,7 +3,9 @@ import TabMenu from 'primevue/tabmenu'
 import Button from 'primevue/button'
 import DataTable from 'primevue/datatable'
 import Column from 'primevue/column'
-import { reactive } from 'vue'
+import Chart from 'primevue/chart'
+import { verticalBar, doughnut, setChartOptions } from './charts/setChart'
+import { ref, reactive, onMounted } from 'vue'
 
 const items = reactive([
   {
@@ -48,393 +50,221 @@ const technicalEconomicIndicators = reactive([
     id: 1,
     number: 1,
     name_indicators: 'Установленная электрическая мощность',
-    unit: {
-      name_1: 'МВт'
-    },
-    y2017: {
-      number_1: '372,5'
-    },
-    y2018: {
-      number_1: '372,5'
-    },
-    y2019: {
-      number_1: '372,5'
-    },
-    y2020: {
-      number_1: '372,5'
-    },
-    y2021: {
-      number_1: '372,5'
-    }
+    unit: 'МВт',
+    y2017: '372,5',
+    y2018: '372,5',
+    y2019: '372,5',
+    y2020: '372,5',
+    y2021: '372,5'
   },
   {
     id: 2,
     number: 2,
     name_indicators: 'Располагаемая электрическая мощность',
-    unit: {
-      name_1: 'МВт'
-    },
-    y2017: {
-      number_1: '268,8'
-    },
-    y2018: {
-      number_1: '327,8'
-    },
-    y2019: {
-      number_1: '320,7'
-    },
-    y2020: {
-      number_1: '320,8'
-    },
-    y2021: {
-      number_1: '320,9'
-    }
+    unit: 'МВт',
+    y2017: '268,8',
+    y2018: '327,8',
+    y2019: '320,7',
+    y2020: '320,8',
+    y2021: '320,9'
   },
   {
     id: 3,
     number: 3,
     name_indicators: 'Установленная тепловая мощность',
-    unit: {
-      name_1: 'Гкал'
-    },
-    y2017: {
-      number_1: '881,7'
-    },
-    y2018: {
-      number_1: '868,9'
-    },
-    y2019: {
-      number_1: '859,9'
-    },
-    y2020: {
-      number_1: '859,9'
-    },
-    y2021: {
-      number_1: '859,9'
-    }
+    unit: 'Гкал',
+    y2017: '881,7',
+    y2018: '868,9',
+    y2019: '859,9',
+    y2020: '859,9',
+    y2021: '859,9'
   },
   {
     id: 4,
     number: 4,
     name_indicators: 'Располагаемая тепловая мощность',
-    unit: {
-      name_1: 'Гкал'
-    },
-    y2017: {
-      number_1: '881,7'
-    },
-    y2018: {
-      number_1: '868,9'
-    },
-    y2019: {
-      number_1: '859,9'
-    },
-    y2020: {
-      number_1: '859,9'
-    },
-    y2021: {
-      number_1: '859,9'
-    }
+    unit: 'Гкал',
+    y2017: '881,7',
+    y2018: '868,9',
+    y2019: '859,9',
+    y2020: '859,9',
+    y2021: '859,9'
   },
   {
     id: 5,
     number: 5,
     name_indicators: 'Выработка электрической энергии',
-    unit: {
-      name_1: 'млн.кВтч'
-    },
-    y2017: {
-      number_1: '1751,6'
-    },
-    y2018: {
-      number_1: '1801,6'
-    },
-    y2019: {
-      number_1: '2192,6'
-    },
-    y2020: {
-      number_1: '2247,0'
-    },
-    y2021: {
-      number_1: '2168,3'
-    }
+    unit: 'млн.кВтч',
+    y2017: '1751,6',
+    y2018: '1801,6',
+    y2019: '2192,6',
+    y2020: '2247,0',
+    y2021: '2168,3'
   },
   {
     id: 6,
     number: 6,
     name_indicators: 'Отпуск электрической энергии',
-    unit: {
-      name_1: 'млн.кВтч'
-    },
-    y2017: {
-      number_1: '1464,3'
-    },
-    y2018: {
-      number_1: '1499,0'
-    },
-    y2019: {
-      number_1: '1852,0'
-    },
-    y2020: {
-      number_1: '1901,3'
-    },
-    y2021: {
-      number_1: '1825,1'
-    }
+    unit: 'млн.кВтч',
+    y2017: '1464,3',
+    y2018: '1499,0',
+    y2019: '1852,0',
+    y2020: '1901,3',
+    y2021: '1825,1'
   },
   {
     id: 7,
     number: 7,
     name_indicators: 'Выработка тепловой энергии',
-    unit: {
-      name_1: 'тыс. Гкал'
-    },
-    y2017: {
-      number_1: '2560,0'
-    },
-    y2018: {
-      number_1: '2681,6'
-    },
-    y2019: {
-      number_1: '2603,8'
-    },
-    y2020: {
-      number_1: '2556,2'
-    },
-    y2021: {
-      number_1: '2630,0'
-    }
+    unit: 'тыс. Гкал',
+    y2017: '2560,0',
+    y2018: '2681,6',
+    y2019: '2603,8',
+    y2020: '2556,2',
+    y2021: '2630,0'
   },
   {
     id: 8,
     number: 8,
     name_indicators: 'Отпуск тепловой энергии',
-    unit: {
-      name_1: 'тыс. Гкал'
-    },
-    y2017: {
-      number_1: '2449,2'
-    },
-    y2018: {
-      number_1: '2555,0'
-    },
-    y2019: {
-      number_1: '2479,2'
-    },
-    y2020: {
-      number_1: '2430,4'
-    },
-    y2021: {
-      number_1: '2503,5'
-    }
+    unit: 'тыс. Гкал',
+    y2017: '2449,2',
+    y2018: '2555,0',
+    y2019: '2479,2',
+    y2020: '2430,4',
+    y2021: '2503,5'
   },
   {
     id: 9,
     number: 9,
     name_indicators: 'Собственные нужды электрическая энергия',
-    unit: {
-      name_1: 'млн. кВтч',
-      name_2: '%'
-    },
-    y2017: {
-      number_1: '272,1',
-      number_2: '15,5'
-    },
-    y2018: {
-      number_1: '285,3',
-      number_2: '15,8'
-    },
-    y2019: {
-      number_1: '323,4',
-      number_2: '14,7'
-    },
-    y2020: {
-      number_1: '326,7',
-      number_2: '14,5'
-    },
-    y2021: {
-      number_1: '324,8',
-      number_2: '15,0'
-    }
+    unit: 'млн. кВтч',
+    y2017: '272,1',
+    y2018: '285,3',
+    y2019: '323,4',
+    y2020: '326,7',
+    y2021: '324,8'
   },
   {
     id: 10,
-    number: 10,
-    name_indicators: 'Собственные нужды тепловая энергия',
-    unit: {
-      name_1: 'тыс. Гкал',
-      name_2: '%'
-    },
-    y2017: {
-      number_1: '106,1',
-      number_2: '4,1'
-    },
-    y2018: {
-      number_1: '121,8',
-      number_2: '4,5'
-    },
-    y2019: {
-      number_1: '119,9',
-      number_2: '4,6'
-    },
-    y2020: {
-      number_1: '121,0',
-      number_2: '4,7'
-    },
-    y2021: {
-      number_1: '121,7',
-      number_2: '4,6'
-    }
+    number: 9.1,
+    name_indicators: 'Собственные нужды электрическая энергия',
+    unit: '%',
+    y2017: '15,5',
+    y2018: '15,8',
+    y2019: '14,7',
+    y2020: '14,5',
+    y2021: '15,0'
   },
   {
     id: 11,
-    number: 11,
-    name_indicators: 'Коэффициент использования установленной электрической мощности',
-    unit: {
-      name_1: '%'
-    },
-    y2017: {
-      number_1: '53,7'
-    },
-    y2018: {
-      number_1: '55,2'
-    },
-    y2019: {
-      number_1: '67,2'
-    },
-    y2020: {
-      number_1: '68,7'
-    },
-    y2021: {
-      number_1: '66,4'
-    }
+    number: 10,
+    name_indicators: 'Собственные нужды тепловая энергия',
+    unit: 'тыс. Гкал',
+    y2017: '106,1',
+    y2018: '121,8',
+    y2019: '119,9',
+    y2020: '121,0',
+    y2021: '121,7'
   },
   {
     id: 12,
-    number: 12,
-    name_indicators: 'Коэффициент использования установленной теплововй мощности',
-    unit: {
-      name_1: '%'
-    },
-    y2017: {
-      number_1: '33,1'
-    },
-    y2018: {
-      number_1: '35,2'
-    },
-    y2019: {
-      number_1: '34,6'
-    },
-    y2020: {
-      number_1: '33,8'
-    },
-    y2021: {
-      number_1: '34,9'
-    }
+    number: 10.1,
+    name_indicators: 'Собственные нужды тепловая энергия',
+    unit: '%',
+    y2017: '4,1',
+    y2018: '4,5',
+    y2019: '4,6',
+    y2020: '4,7',
+    y2021: '4,6'
   },
   {
     id: 13,
-    number: 13,
-    name_indicators: 'Удельный расход топлива на электрическую энергию',
-    unit: {
-      name_1: 'гут/кВтч',
-      name_2: 'г.н.т./кВтч'
-    },
-    y2017: {
-      number_1: '290,1',
-      number_2: '-'
-    },
-    y2018: {
-      number_1: '299,6',
-      number_2: '-'
-    },
-    y2019: {
-      number_1: '313,2',
-      number_2: '-'
-    },
-    y2020: {
-      number_1: '320,1',
-      number_2: '-'
-    },
-    y2021: {
-      number_1: '312,6',
-      number_2: '-'
-    }
+    number: 11,
+    name_indicators: 'Коэффициент использования установленной электрической мощности',
+    unit: '%',
+    y2017: '53,7',
+    y2018: '55,2',
+    y2019: '67,2',
+    y2020: '68,7',
+    y2021: '66,4'
   },
   {
     id: 14,
-    number: 14,
-    name_indicators: 'Удельный расход топлива на тепловую энергию',
-    unit: {
-      name_1: 'кгут/Гкал',
-      name_2: 'кг.н.т./Гкал'
-    },
-    y2017: {
-      number_1: '185,1',
-      number_2: '-'
-    },
-    y2018: {
-      number_1: '184,5',
-      number_2: '-'
-    },
-    y2019: {
-      number_1: '184,0',
-      number_2: '-'
-    },
-    y2020: {
-      number_1: '184,4',
-      number_2: '-'
-    },
-    y2021: {
-      number_1: '181,7',
-      number_2: '-'
-    }
+    number: 12,
+    name_indicators: 'Коэффициент использования установленной теплововй мощности',
+    unit: '%',
+    y2017: '33,1',
+    y2018: '35,2',
+    y2019: '34,6',
+    y2020: '33,8',
+    y2021: '34,9'
   },
   {
     id: 15,
-    number: 15,
-    name_indicators: 'Общий КПД электростанции',
-    unit: {
-      name_1: '%'
-    },
-    y2017: {
-      number_1: '60,2'
-    },
-    y2018: {
-      number_1: '59,6'
-    },
-    y2019: {
-      number_1: '56,0'
-    },
-    y2020: {
-      number_1: '54,9'
-    },
-    y2021: {
-      number_1: '56,7'
-    }
+    number: 13,
+    name_indicators: 'Удельный расход топлива на электрическую энергию',
+    unit: 'гут/кВтч',
+    y2017: '290,1',
+    y2018: '299,6',
+    y2019: '313,2',
+    y2020: '320,1',
+    y2021: '312,6'
   },
   {
     id: 16,
+    number: 13.1,
+    name_indicators: 'Удельный расход топлива на электрическую энергию',
+    unit: 'г.н.т./кВтч',
+    y2017: '-',
+    y2018: '-',
+    y2019: '-',
+    y2020: '-',
+    y2021: '-'
+  },
+  {
+    id: 17,
+    number: 14,
+    name_indicators: 'Удельный расход топлива на тепловую энергию',
+    unit: 'кгут/Гкал',
+    y2017: '185,1',
+    y2018: '184,5',
+    y2019: '184,0',
+    y2020: '184,4',
+    y2021: '181,7'
+  },
+  {
+    id: 18,
+    number: 14.1,
+    name_indicators: 'Удельный расход топлива на тепловую энергию',
+    unit: 'кг.н.т./Гкал',
+    y2017: '-',
+    y2018: '-',
+    y2019: '-',
+    y2020: '-',
+    y2021: '-'
+  },
+  {
+    id: 19,
+    number: 15,
+    name_indicators: 'Общий КПД электростанции',
+    unit: '%',
+    y2017: '60,2',
+    y2018: '59,6',
+    y2019: '56,0',
+    y2020: '54,9',
+    y2021: '56,7'
+  },
+  {
+    id: 20,
     number: 16,
     name_indicators: 'Износ электростанции*',
-    unit: {
-      name_1: '%'
-    },
-    y2017: {
-      number_1: '74,1'
-    },
-    y2018: {
-      number_1: '58,1'
-    },
-    y2019: {
-      number_1: '60,6'
-    },
-    y2020: {
-      number_1: '63,0'
-    },
-    y2021: {
-      number_1: '64,9'
-    }
+    unit: '%',
+    y2017: '74,1',
+    y2018: '58,1',
+    y2019: '60,6',
+    y2020: '63,0',
+    y2021: '64,9'
   }
 ])
 
@@ -847,8 +677,235 @@ const thermalEnergyTariff = reactive([
     y2022: {
       number_1: '1,10'
     }
+  },
+  {
+    id: 12,
+    number: 5,
+    name_indicators:
+      'Ремонты, не приводящие к увеличению стоимости (с учетом материалов на ремонт)',
+    unit: {
+      name_1: 'тенге/кВтч'
+    },
+    y2017: {
+      number_1: '0,25'
+    },
+    y2018: {
+      number_1: '0,37'
+    },
+    y2019: {
+      number_1: '0,72'
+    },
+    y2020: {
+      number_1: '0,20'
+    },
+    y2021: {
+      number_1: '0,35'
+    },
+    y2022: {
+      number_1: '1,06'
+    }
+  },
+  {
+    id: 13,
+    number: 6,
+    name_indicators: 'Инвестиционная программа (с учетом возврата основного долга по займам)',
+    unit: {
+      name_1: 'тыс. тенге'
+    },
+    y2017: {
+      number_1: '3407122'
+    },
+    y2018: {
+      number_1: '3010530'
+    },
+    y2019: {
+      number_1: '1212190'
+    },
+    y2020: {
+      number_1: '993166'
+    },
+    y2021: {
+      number_1: '1833819'
+    },
+    y2022: {
+      number_1: '1356209'
+    }
+  },
+  {
+    id: 14,
+    number: 7,
+    name_indicators: 'Фонд оплаты труда',
+    unit: {
+      name_1: 'тыс. тенге'
+    },
+    y2017: {
+      number_1: '833784'
+    },
+    y2018: {
+      number_1: '758657'
+    },
+    y2019: {
+      number_1: '784699'
+    },
+    y2020: {
+      number_1: '1017346'
+    },
+    y2021: {
+      number_1: '1331517'
+    },
+    y2022: {
+      number_1: '2148932'
+    }
+  },
+  {
+    id: 15,
+    number: 8,
+    name_indicators: 'Объем реализации',
+    unit: {
+      name_1: 'тыс. кВтч'
+    },
+    y2017: {
+      number_1: '1474454'
+    },
+    y2018: {
+      number_1: '1512108'
+    },
+    y2019: {
+      number_1: '1876147'
+    },
+    y2020: {
+      number_1: '1951608'
+    },
+    y2021: {
+      number_1: '1862117'
+    },
+    y2022: {
+      number_1: '1823306'
+    }
+  },
+  {
+    id: 16,
+    number: 9,
+    name_indicators: 'Средневзвешанный тариф реализации',
+    unit: {
+      name_1: 'тыс. кВтч'
+    },
+    y2017: {
+      number_1: '7,50'
+    },
+    y2018: {
+      number_1: '7,50'
+    },
+    y2019: {
+      number_1: '5,91'
+    },
+    y2020: {
+      number_1: '7,09'
+    },
+    y2021: {
+      number_1: '8,51'
+    },
+    y2022: {
+      number_1: '8,48'
+    }
   }
 ])
+
+const teps = reactive([
+  {
+    id: 1,
+    field: 'number',
+    header: '№'
+  },
+  {
+    id: 2,
+    field: 'name_indicators',
+    header: 'Наименование показателей'
+  },
+  {
+    id: 3,
+    field: 'unit',
+    header: 'Ед. изм.'
+  },
+  {
+    id: 4,
+    field: 'y2017',
+    header: '2017'
+  },
+  {
+    id: 5,
+    field: 'y2018',
+    header: '2018'
+  },
+  {
+    id: 6,
+    field: 'y2019',
+    header: '2019'
+  },
+  {
+    id: 7,
+    field: 'y2020',
+    header: '2020'
+  },
+  {
+    id: 8,
+    field: 'y2021',
+    header: '2021'
+  }
+])
+
+onMounted(() => {
+  chartData.value = verticalBar(chart)
+  chartData2.value = doughnut(chart2)
+  chartData3.value = verticalBar(chart3)
+  chartData4.value = doughnut(chart4)
+  chartOptions.value = setChartOptions()
+})
+
+const chartData = ref()
+const chartData2 = ref()
+const chartData3 = ref()
+const chartData4 = ref()
+const chartOptions = ref()
+
+let chart = reactive({
+  labels: [2019, 2020, 2021, 2022],
+  data: [
+    {
+      label: 'План (млн. тенге)',
+      color: 'blue',
+      data: [1212190, 993166, 1833819, 1356209]
+    },
+    {
+      label: 'План (млн. тенге)',
+      color: 'yellow',
+      data: [1212190, 993166, 1833819, 1356209]
+    }
+  ]
+})
+let chart2 = reactive({
+  labels: [2019, 2020, 2021, 2022],
+  data: [49, 76, 64, 0]
+})
+let chart3 = reactive({
+  labels: [2019, 2020, 2021, 2022],
+  data: [
+    {
+      label: 'План (млн. тенге)',
+      color: 'blue',
+      data: [1414303, 774162, 1059965, 1700589]
+    },
+    {
+      label: 'План (млн. тенге)',
+      color: 'yellow',
+      data: [1416578, 779191, 1064561, 0]
+    }
+  ]
+})
+let chart4 = reactive({
+  labels: [2019, 2020, 2021, 2022],
+  data: [26, 7, 5, 0]
+})
 </script>
 
 <template>
@@ -874,73 +931,7 @@ const thermalEnergyTariff = reactive([
     <h1>Технико-экономические показатели</h1>
     <div class="card border-round-lg p-4 bg-white">
       <DataTable showGridlines :value="technicalEconomicIndicators">
-        <Column field="number" header="№"></Column>
-        <Column field="name_indicators" header="Наименование показателей"></Column>
-        <Column field="unit" header="Ед. изм.">
-          <template #body="slotProps">
-            <div>
-              {{ slotProps.data.unit.name_1 }}
-            </div>
-            <div>
-              {{ slotProps.data.unit.name_2 }}
-            </div>
-          </template>
-        </Column>
-
-        <Column field="y2017" header="2017">
-          <template #body="slotProps">
-            <div>
-              {{ slotProps.data.y2017.number_1 }}
-            </div>
-            <div>
-              {{ slotProps.data.y2017.number_2 }}
-            </div>
-          </template>
-        </Column>
-
-        <Column field="y2018" header="2018">
-          <template #body="slotProps">
-            <div>
-              {{ slotProps.data.y2018.number_1 }}
-            </div>
-            <div>
-              {{ slotProps.data.y2018.number_2 }}
-            </div>
-          </template>
-        </Column>
-
-        <Column field="y2019" header="2019">
-          <template #body="slotProps">
-            <div>
-              {{ slotProps.data.y2019.number_1 }}
-            </div>
-            <div>
-              {{ slotProps.data.y2019.number_2 }}
-            </div>
-          </template>
-        </Column>
-
-        <Column field="y2020" header="2020">
-          <template #body="slotProps">
-            <div>
-              {{ slotProps.data.y2020.number_1 }}
-            </div>
-            <div>
-              {{ slotProps.data.y2020.number_2 }}
-            </div>
-          </template>
-        </Column>
-
-        <Column field="y2021" header="2021">
-          <template #body="slotProps">
-            <div>
-              {{ slotProps.data.y2021.number_1 }}
-            </div>
-            <div>
-              {{ slotProps.data.y2021.number_2 }}
-            </div>
-          </template>
-        </Column>
+        <Column v-for="tep in teps" :key="tep.id" :field="tep.field" :header="tep.header" />
       </DataTable>
     </div>
     <!-- ТЭП -->
@@ -975,7 +966,7 @@ const thermalEnergyTariff = reactive([
     <!-- Тарифы -->
     <h1>Тарифы</h1>
     <div class="card border-round-lg p-4 bg-white">
-      <h3>По производству электрической энергии</h3>
+      <!-- <h3>По производству электрической энергии</h3> -->
       <DataTable showGridlines :value="thermalEnergyTariff">
         <Column field="number" header="№"></Column>
         <Column field="name_indicators" header="Наименование показателей"></Column>
@@ -1058,6 +1049,18 @@ const thermalEnergyTariff = reactive([
       </DataTable>
     </div>
     <!-- Тарифы -->
+
+    <!-- Инвестиционная программа -->
+    <div class="card flex justify-content-between border-round-lg p-4 bg-white">
+      <Chart type="bar" :data="chartData" :options="chartOptions" class="w-full h-30rem" />
+      <Chart type="doughnut" :data="chartData2" :options="chartOptions" class="w-full md:w-30rem" />
+    </div>
+
+    <div class="card flex justify-content-between border-round-lg p-4 bg-white">
+      <Chart type="bar" :data="chartData3" :options="chartOptions" class="w-full h-30rem" />
+      <Chart type="doughnut" :data="chartData4" :options="chartOptions" class="w-full md:w-30rem" />
+    </div>
+    <!-- Инвестиционная программа -->
 
     <router-view />
   </div>

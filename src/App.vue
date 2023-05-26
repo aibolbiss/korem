@@ -856,9 +856,9 @@ const teps = reactive([
 
 onMounted(() => {
   chartData.value = verticalBar(chart)
-  chartData2.value = doughnut(chart2)
-  chartData3.value = verticalBar(chart3)
-  chartData4.value = doughnut(chart4)
+  chartData2.value = doughnut(chart)
+  chartData3.value = verticalBar(chart2)
+  chartData4.value = doughnut(chart2)
   chartOptions.value = setChartOptions()
 })
 
@@ -877,17 +877,15 @@ let chart = reactive({
       data: [1212190, 993166, 1833819, 1356209]
     },
     {
-      label: 'План (млн. тенге)',
+      label: 'Факт (млн. тенге)',
       color: 'yellow',
       data: [1212190, 993166, 1833819, 1356209]
     }
-  ]
+  ],
+  data2: [49, 76, 64, 0]
 })
+
 let chart2 = reactive({
-  labels: [2019, 2020, 2021, 2022],
-  data: [49, 76, 64, 0]
-})
-let chart3 = reactive({
   labels: [2019, 2020, 2021, 2022],
   data: [
     {
@@ -896,15 +894,12 @@ let chart3 = reactive({
       data: [1414303, 774162, 1059965, 1700589]
     },
     {
-      label: 'План (млн. тенге)',
+      label: 'Факт (млн. тенге)',
       color: 'yellow',
       data: [1416578, 779191, 1064561, 0]
     }
-  ]
-})
-let chart4 = reactive({
-  labels: [2019, 2020, 2021, 2022],
-  data: [26, 7, 5, 0]
+  ],
+  data2: [26, 7, 5, 0]
 })
 </script>
 

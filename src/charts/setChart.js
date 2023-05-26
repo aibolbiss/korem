@@ -17,14 +17,14 @@ export function verticalBar({ labels, data }) {
   }
 }
 
-export function doughnut({ labels, data }) {
+export function doughnut({ labels, data2 }) {
   const documentStyle = getComputedStyle(document.body)
 
   return {
     labels,
     datasets: [
       {
-        data,
+        data: data2,
         backgroundColor: [
           documentStyle.getPropertyValue('--blue-500'),
           documentStyle.getPropertyValue('--yellow-500'),

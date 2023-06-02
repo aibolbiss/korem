@@ -3,9 +3,73 @@ import TabMenu from 'primevue/tabmenu'
 import Button from 'primevue/button'
 import DataTable from 'primevue/datatable'
 import Column from 'primevue/column'
+import ColumnGroup from 'primevue/columngroup'
+import Row from 'primevue/row'
+
 import Chart from 'primevue/chart'
+import OrganizationChart from 'primevue/organizationchart'
 import { verticalBar, doughnut, setChartOptions } from './charts/setChart'
 import { ref, reactive, onMounted } from 'vue'
+
+// Оборудование
+const sales = ref([
+  {
+    id: 1,
+    value1: 'Name 1',
+    value2: 'Data 1',
+    value3: 'Param 1',
+    value4: 'Project 1',
+    value5: 'Fact 1',
+    value6: 1,
+    value7: 2,
+    value8: 3
+  },
+  {
+    id: 2,
+    value1: 'Name 2',
+    value2: 'Data 2',
+    value3: 'Param 2',
+    value4: 'Project 2',
+    value5: 'Fact 2',
+    value6: 1,
+    value7: 2,
+    value8: 3
+  },
+  {
+    id: 3,
+    value1: 'Name 3',
+    value2: 'Data 3',
+    value3: 'Param 3',
+    value4: 'Project 3',
+    value5: 'Fact 3',
+    value6: 1,
+    value7: 2,
+    value8: 3
+  },
+  {
+    id: 4,
+    value1: 'Name 4',
+    value2: 'Data 4',
+    value3: 'Param 4',
+    value4: 'Project 4',
+    value5: 'Fact 4',
+    value6: 1,
+    value7: 2,
+    value8: 3
+  },
+  {
+    id: 5,
+    value1: 'Name 5',
+    value2: 'Data 5',
+    value3: 'Param 5',
+    value4: 'Project 5',
+    value5: 'Fact 5',
+    value6: 1,
+    value7: 2,
+    value8: 3
+  }
+])
+// Оборудование
 
 const items = reactive([
   {
@@ -854,6 +918,138 @@ const teps = reactive([
   }
 ])
 
+// const balance = reactive([
+//   {
+//     id: 1,
+//     field: 'number',
+//     header: '№'
+//   },
+//   {
+//     id: 2,
+//     field: 'name_indicators',
+//     header: 'Наименование цеха'
+//   },
+//   {
+//     id: 3,
+//     field: 'unit',
+//     header: 'Тип'
+//   },
+//   {
+//     id: 4,
+//     field: 'y2017',
+//     header: 'Параметр'
+//   },
+//   {
+//     id: 5,
+//     field: 'y2018',
+//     header: 'Наимнование'
+//   },
+//   {
+//     id: 6,
+//     field: 'y2019',
+//     header: 'Количество'
+//   }
+// ])
+
+// const balanceTable = reactive([
+//   {
+//     id: 1,
+//     number: 1,
+//     name_indicators: 'Установленная электрическая мощность',
+//     unit: 'МВт',
+//     y2017: '372,5',
+//     y2018: '372,5',
+//     y2019: '372,5',
+//     y2020: '372,5',
+//     y2021: '372,5'
+//   },
+//   {
+//     id: 2,
+//     number: 2,
+//     name_indicators: 'Располагаемая электрическая мощность',
+//     unit: 'МВт',
+//     y2017: '268,8',
+//     y2018: '327,8',
+//     y2019: '320,7',
+//     y2020: '320,8',
+//     y2021: '320,9'
+//   },
+//   {
+//     id: 3,
+//     number: 3,
+//     name_indicators: 'Установленная тепловая мощность',
+//     unit: 'Гкал',
+//     y2017: '881,7',
+//     y2018: '868,9',
+//     y2019: '859,9',
+//     y2020: '859,9',
+//     y2021: '859,9'
+//   }
+// ])
+
+const data = ref({
+  key: '0',
+  type: 'person',
+  styleClass: 'bg-indigo-500 text-white border-round-xl',
+  data: {
+    title: 'Генеральный директор',
+    norm: 1,
+    fact: 2
+  },
+  children: [
+    {
+      key: '0_0',
+      type: 'person',
+      styleClass: 'bg-purple-500 text-white border-round-xl',
+      data: {
+        title: 'Директор по ремонтам',
+        norm: 1,
+        fact: 2
+      },
+      children: [
+        {
+          label: 'Сотрудник 1',
+          styleClass: 'bg-purple-500 text-white border-round-xl',
+          norm: 1,
+          fact: 2
+        },
+        {
+          label: 'Сотрудник 2',
+          styleClass: 'bg-purple-500 text-white border-round-xl',
+          norm: 1,
+          fact: 2
+        }
+      ]
+    },
+    {
+      key: '0_1',
+      type: 'person',
+      styleClass: 'bg-teal-500 text-white border-round-xl',
+      data: {
+        title: 'Финансовый директор',
+        norm: 1,
+        fact: 2
+      },
+      children: [
+        {
+          label: 'Development',
+          styleClass: 'bg-teal-500 text-white border-round-xl',
+          norm: 1,
+          fact: 2
+        },
+        {
+          label: 'UI/UX Design',
+          styleClass: 'bg-teal-500 text-white border-round-xl',
+          norm: 1,
+          fact: 2
+        }
+      ]
+    }
+  ]
+})
+
+const selection = ref({})
+
 onMounted(() => {
   chartData.value = verticalBar(chart)
   chartData2.value = doughnut(chart)
@@ -1056,6 +1252,440 @@ let chart2 = reactive({
       <Chart type="doughnut" :data="chartData4" :options="chartOptions" class="w-full md:w-30rem" />
     </div>
     <!-- Инвестиционная программа -->
+
+    <!-- Балансовая принадлежность -->
+    <h1>Балансовая принадлежность</h1>
+    <div class="card border-round-lg p-4 bg-white">
+      <OrganizationChart
+        v-model:selectionKeys="selection"
+        :value="data"
+        collapsible
+        selectionMode="multiple"
+      >
+        <template #person="slotProps">
+          <div class="flex flex-column">
+            <div class="flex flex-column align-items-center">
+              <span class="font-bold">{{ slotProps.node.data.title }}</span>
+              <div class="flex justify-content-around w-full">
+                <span>Норм: {{ slotProps.node.data.norm }}</span>
+                <span>Факт: {{ slotProps.node.data.fact }}</span>
+              </div>
+            </div>
+          </div>
+        </template>
+        <template #default="slotProps">
+          <span>{{ slotProps.node.label }}</span>
+          <div class="flex justify-content-around w-full">
+            <span>Норм: {{ slotProps.node.norm }}</span>
+            <span>Факт: {{ slotProps.node.fact }}</span>
+          </div>
+        </template>
+      </OrganizationChart>
+    </div>
+
+    <!-- Балансовая принадлежность -->
+
+    <!-- 6.Оборудование -->
+    <h1>Оборудование</h1>
+    <div class="card border-round-lg p-4 bg-white">
+      <h2 class="mb-4">Основные технические характеристики основного котельного оборудования</h2>
+      <DataTable :value="sales" showGridlines>
+        <ColumnGroup type="header">
+          <Row>
+            <Column header="№" :rowspan="3" />
+            <Column
+              header="Наименование энергетического или водогрейного котла (станционный №, тип, марка, год ввода)"
+              :rowspan="3"
+            />
+            <Column header="Производительность, тонн/час" :rowspan="2" />
+            <Column
+              header="Параметры пара (давление, кгс/см2 температура оС), тонн/час"
+              :rowspan="2"
+            />
+          </Row>
+
+          <Row>
+            <Column header="КПД котла брутто/нетто" :colspan="2" />
+            <Column header="Парковый ресурс, час" :rowspan="3" />
+            <Column header="Наработка, час" :rowspan="3" />
+            <Column header="Износ, %" :rowspan="3" />
+          </Row>
+          <Row>
+            <Column header="Расход сетевой воды, тонн/час" field="lastYearSale" />
+            <Column
+              header="Параметры сетевой воды (давление, температура до и после котла)"
+              field="lastYearSale"
+            />
+            <Column header="Проектное" field="lastYearSale" />
+            <Column header="Фактическое" field="lastYearSale" />
+          </Row>
+        </ColumnGroup>
+        <Column field="id" />
+        <Column field="value1">
+          <template #body="slotProps"> {{ slotProps.data.value1 }}</template>
+        </Column>
+        <Column field="value2">
+          <template #body="slotProps"> {{ slotProps.data.value2 }}</template>
+        </Column>
+        <Column field="value3">
+          <template #body="slotProps">
+            {{ slotProps.data.value3 }}
+          </template>
+        </Column>
+        <Column field="value4">
+          <template #body="slotProps">
+            {{ slotProps.data.value4 }}
+          </template>
+        </Column>
+        <Column field="value5">
+          <template #body="slotProps">
+            {{ slotProps.data.value5 }}
+          </template>
+        </Column>
+        <Column field="value6">
+          <template #body="slotProps">
+            {{ slotProps.data.value6 }}
+          </template>
+        </Column>
+        <Column field="value7">
+          <template #body="slotProps">
+            {{ slotProps.data.value7 }}
+          </template>
+        </Column>
+        <Column field="value8">
+          <template #body="slotProps">
+            {{ slotProps.data.value8 }}
+          </template>
+        </Column>
+      </DataTable>
+    </div>
+
+    <div class="card border-round-lg p-4 bg-white">
+      <h2 class="mb-4">
+        Основные технические характеристики основного турбинного оборудования (паровой турбины,
+        газовой турбины, газопоршневого двигателя)
+      </h2>
+      <DataTable :value="sales" showGridlines>
+        <ColumnGroup type="header">
+          <Row>
+            <Column header="№" :rowspan="3" />
+            <Column
+              header="Наименование турбоагрегата (станционный №, тип, марка, год ввода)"
+              :rowspan="3"
+            />
+            <Column header="Мощность, МВТ" :rowspan="2" />
+            <Column
+              header="Параметры пара (давление, кгс/см2 температура оС). Параметры газа"
+              :rowspan="3"
+            />
+          </Row>
+
+          <Row>
+            <Column header="Внутренний относительный КПД" :colspan="2" />
+            <Column header="Парковый ресурс, час" :rowspan="3" />
+            <Column header="Наработка, час" :rowspan="3" />
+            <Column header="Износ, %" :rowspan="3" />
+          </Row>
+          <Row>
+            <Column header="Расход пара, тонн/час (газа, м3/час)" field="lastYearSale" />
+            <Column header="Проектное" field="lastYearSale" />
+            <Column header="Фактическое" field="lastYearSale" />
+          </Row>
+        </ColumnGroup>
+        <Column field="id" />
+        <Column field="value1">
+          <template #body="slotProps"> {{ slotProps.data.value1 }}</template>
+        </Column>
+        <Column field="value2">
+          <template #body="slotProps"> {{ slotProps.data.value2 }}</template>
+        </Column>
+        <Column field="value3">
+          <template #body="slotProps">
+            {{ slotProps.data.value3 }}
+          </template>
+        </Column>
+        <Column field="value4">
+          <template #body="slotProps">
+            {{ slotProps.data.value4 }}
+          </template>
+        </Column>
+        <Column field="value5">
+          <template #body="slotProps">
+            {{ slotProps.data.value5 }}
+          </template>
+        </Column>
+        <Column field="value6">
+          <template #body="slotProps">
+            {{ slotProps.data.value6 }}
+          </template>
+        </Column>
+        <Column field="value7">
+          <template #body="slotProps">
+            {{ slotProps.data.value7 }}
+          </template>
+        </Column>
+        <Column field="value8">
+          <template #body="slotProps">
+            {{ slotProps.data.value8 }}
+          </template>
+        </Column>
+      </DataTable>
+    </div>
+
+    <div class="card border-round-lg p-4 bg-white">
+      <h2 class="mb-4">Основные технические характеристики гидротурбины</h2>
+      <DataTable :value="sales" showGridlines>
+        <ColumnGroup type="header">
+          <Row>
+            <Column header="№" :rowspan="3" />
+            <Column header="Тип турбины" :rowspan="3" />
+          </Row>
+
+          <Row>
+            <Column header="Мощность" :colspan="2" />
+            <Column header="Напор" :colspan="2" />
+            <Column header="Частота вращения" :colspan="2" />
+            <Column header="Диаметр рабочего колеса" :rowspan="3" />
+            <Column header="Парковый ресурс, час" :rowspan="3" />
+            <Column header="Наработка, час" :rowspan="3" />
+            <Column header="Износ, %" :rowspan="3" />
+          </Row>
+          <Row>
+            <Column header="Номинальная" field="lastYearSale" />
+            <Column header="Расчетная" field="lastYearSale" />
+            <Column header="Номинальный" field="lastYearSale" />
+            <Column header="Расчетный" field="lastYearSale" />
+            <Column header="Номинальная" field="lastYearSale" />
+            <Column header="Расчетная" field="lastYearSale" />
+          </Row>
+        </ColumnGroup>
+        <Column field="id" />
+        <Column field="value1">
+          <template #body="slotProps"> {{ slotProps.data.value1 }}</template>
+        </Column>
+        <Column field="value2">
+          <template #body="slotProps"> {{ slotProps.data.value2 }}</template>
+        </Column>
+        <Column field="value3">
+          <template #body="slotProps">
+            {{ slotProps.data.value3 }}
+          </template>
+        </Column>
+        <Column field="value4">
+          <template #body="slotProps">
+            {{ slotProps.data.value4 }}
+          </template>
+        </Column>
+        <Column field="value5">
+          <template #body="slotProps">
+            {{ slotProps.data.value5 }}
+          </template>
+        </Column>
+        <Column field="value6">
+          <template #body="slotProps">
+            {{ slotProps.data.value6 }}
+          </template>
+        </Column>
+        <Column field="value7">
+          <template #body="slotProps">
+            {{ slotProps.data.value7 }}
+          </template>
+        </Column>
+        <Column field="value8">
+          <template #body="slotProps">
+            {{ slotProps.data.value8 }}
+          </template>
+        </Column>
+        <Column field="value7">
+          <template #body="slotProps">
+            {{ slotProps.data.value7 }}
+          </template>
+        </Column>
+        <Column field="value8">
+          <template #body="slotProps">
+            {{ slotProps.data.value8 }}
+          </template>
+        </Column>
+        <Column field="value7">
+          <template #body="slotProps">
+            {{ slotProps.data.value7 }}
+          </template>
+        </Column>
+      </DataTable>
+    </div>
+
+    <div class="card border-round-lg p-4 bg-white">
+      <h2 class="mb-4">
+        Основные технические характеристики генераторов, блочных трансформаторов и трансформаторов
+        связи с износом, наработкой и парковым ресурсом
+      </h2>
+      <DataTable :value="sales" showGridlines>
+        <ColumnGroup type="header">
+          <Row>
+            <Column header="№" :rowspan="3" />
+            <Column
+              header="Наименование генератора (станционный №, тип, марка, год ввода)"
+              :rowspan="3"
+            />
+          </Row>
+
+          <Row>
+            <Column header="Номинальные значения" :colspan="5" />
+            <Column header="Парковый ресурс, час" :rowspan="3" />
+            <Column header="Наработка, час" :rowspan="3" />
+            <Column header="Износ, %" :rowspan="3" />
+          </Row>
+          <Row>
+            <Column header="Мощность кВА" field="lastYearSale" />
+            <Column header="Коэффицент мощности" field="lastYearSale" />
+            <Column header="Ток статора, А" field="lastYearSale" />
+            <Column header="Напряжение обмотки статора, В" field="lastYearSale" />
+            <Column header="КПД при Рн, %" field="lastYearSale" />
+          </Row>
+        </ColumnGroup>
+        <Column field="id" />
+        <Column field="value1">
+          <template #body="slotProps"> {{ slotProps.data.value1 }}</template>
+        </Column>
+        <Column field="value2">
+          <template #body="slotProps"> {{ slotProps.data.value2 }}</template>
+        </Column>
+        <Column field="value3">
+          <template #body="slotProps">
+            {{ slotProps.data.value3 }}
+          </template>
+        </Column>
+        <Column field="value4">
+          <template #body="slotProps">
+            {{ slotProps.data.value4 }}
+          </template>
+        </Column>
+        <Column field="value5">
+          <template #body="slotProps">
+            {{ slotProps.data.value5 }}
+          </template>
+        </Column>
+        <Column field="value6">
+          <template #body="slotProps">
+            {{ slotProps.data.value6 }}
+          </template>
+        </Column>
+        <Column field="value7">
+          <template #body="slotProps">
+            {{ slotProps.data.value7 }}
+          </template>
+        </Column>
+        <Column field="value8">
+          <template #body="slotProps">
+            {{ slotProps.data.value8 }}
+          </template>
+        </Column>
+        <Column field="value7">
+          <template #body="slotProps">
+            {{ slotProps.data.value7 }}
+          </template>
+        </Column>
+      </DataTable>
+    </div>
+
+    <div class="card border-round-lg p-4 bg-white">
+      <DataTable :value="sales" showGridlines>
+        <ColumnGroup type="header">
+          <Row>
+            <Column header="№" :rowspan="3" />
+            <Column header="Тип трансформатора" :rowspan="3" />
+            <Column header="Мощность кВА" :rowspan="3" />
+          </Row>
+
+          <Row>
+            <Column header="Напряжение, В" :colspan="3" />
+            <Column header="Напор" :colspan="2" />
+            <Column header="Ток холостого хода, %" :rowspan="3" />
+            <Column header="Напряжение КЗ, %" :rowspan="3" />
+            <Column header="Схема и группа соединений обмоток" :rowspan="3" />
+            <Column header="КПД" :rowspan="3" />
+            <Column header="Парковый ресурс, час" :rowspan="3" />
+            <Column header="Наработка, час" :rowspan="3" />
+            <Column header="Износ, %" :rowspan="3" />
+          </Row>
+          <Row>
+            <Column header="ВН" field="lastYearSale" />
+            <Column header="СН" field="lastYearSale" />
+            <Column header="НН" field="lastYearSale" />
+            <Column header="Холостого хода" field="lastYearSale" />
+            <Column header="КЗ" field="lastYearSale" />
+          </Row>
+        </ColumnGroup>
+        <Column field="id" />
+        <Column field="value1">
+          <template #body="slotProps"> {{ slotProps.data.value1 }}</template>
+        </Column>
+        <Column field="value2">
+          <template #body="slotProps"> {{ slotProps.data.value2 }}</template>
+        </Column>
+        <Column field="value3">
+          <template #body="slotProps">
+            {{ slotProps.data.value3 }}
+          </template>
+        </Column>
+        <Column field="value4">
+          <template #body="slotProps">
+            {{ slotProps.data.value4 }}
+          </template>
+        </Column>
+        <Column field="value5">
+          <template #body="slotProps">
+            {{ slotProps.data.value5 }}
+          </template>
+        </Column>
+        <Column field="value6">
+          <template #body="slotProps">
+            {{ slotProps.data.value6 }}
+          </template>
+        </Column>
+        <Column field="value7">
+          <template #body="slotProps">
+            {{ slotProps.data.value7 }}
+          </template>
+        </Column>
+        <Column field="value8">
+          <template #body="slotProps">
+            {{ slotProps.data.value8 }}
+          </template>
+        </Column>
+        <Column field="value7">
+          <template #body="slotProps">
+            {{ slotProps.data.value7 }}
+          </template>
+        </Column>
+        <Column field="value8">
+          <template #body="slotProps">
+            {{ slotProps.data.value8 }}
+          </template>
+        </Column>
+        <Column field="value7">
+          <template #body="slotProps">
+            {{ slotProps.data.value7 }}
+          </template>
+        </Column>
+        <Column field="value7">
+          <template #body="slotProps">
+            {{ slotProps.data.value7 }}
+          </template>
+        </Column>
+        <Column field="value8">
+          <template #body="slotProps">
+            {{ slotProps.data.value8 }}
+          </template>
+        </Column>
+        <Column field="value7">
+          <template #body="slotProps">
+            {{ slotProps.data.value7 }}
+          </template>
+        </Column>
+      </DataTable>
+    </div>
+    <!-- 6.Оборудование -->
 
     <router-view />
   </div>
